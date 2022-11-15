@@ -1,3 +1,14 @@
+/**
+ * 一个简单的词法分析器
+ * 规约如下:
+ * identifier: [a-zA-Z]([a-zA-Z] | [0-9])*
+ * Arithmetic OP: + | -
+ * Relation OP: >= | > | <= | <> | < | =
+ * IF: if
+ * ELSE: else
+ * WS: [' '\t\n]+
+ * NUMBER: 0 | [1-9][0-9]*(.[0-9]+)?((E | e)[+-](0 | [1-9][0-9]*))?
+ */
 public class DragonTokenizer extends Tokenizer {
 
     private Token WS(){

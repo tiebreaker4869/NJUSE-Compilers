@@ -3,15 +3,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Tokenizer {
+public abstract class  Tokenizer {
 
-    private int pos;
+    protected int pos;
 
-    private char peek;
+    protected char peek;
 
-    private char[] programText;
+    protected char[] programText;
 
-    private int maxPos;
+    protected int maxPos;
 
     public static final Token IF = new Token("if", Token.Type.IF);
     public static final Token ELSE = new Token("else", Token.Type.ELSE);
@@ -22,6 +22,7 @@ public class Tokenizer {
     public static final Token EQ = new Token("=", Token.Type.EQ);
     public static final Token NEQ = new Token("<>", Token.Type.NEQ);
     public static final Token EOF = new Token("EOF", Token.Type.EOF);
+    public static final Token WS = new Token(" ", Token.Type.WS);
 
 
     /**
@@ -38,15 +39,18 @@ public class Tokenizer {
                 sb.append(ch);
             }
             this.programText = sb.toString().toCharArray();
-            this.pos = -1;
+            this.pos = 0;
+            this.peek = programText[0];
             this.maxPos = this.programText.length;
+            KeywordTable.reserve(IF);
+            KeywordTable.reserve(ELSE);
         }catch (IOException exception){
             System.out.println("IOException occurs when reading program!");
             exception.printStackTrace();
         }
     }
 
-    private void advance(){
+    protected void advance(){
         this.pos ++;
         if(this.pos >= maxPos){
             this.peek = (char) -1;
@@ -55,12 +59,10 @@ public class Tokenizer {
         }
     }
 
-    private void reset(int pos){
+    protected void reset(int pos){
         this.pos = pos;
         this.peek = programText[pos];
     }
 
-    public Token getNextToken(){
-        return null;
-    }
+    public abstract Token nextToken();
 }

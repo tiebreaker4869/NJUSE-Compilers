@@ -1,0 +1,9 @@
+int main(){
+    const int a = 7;
+    int array[5] = {1, 2, 3};
+    return array[1] * array[2] + array[0] + a;
+}
+
+
+
+
